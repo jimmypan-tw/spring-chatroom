@@ -8,48 +8,48 @@ import com.alibaba.fastjson.JSONObject;
 public class Message {
     // TODO: add message model.
     private String username;
-    private String message;
+    private String msg;
     private String type;
     private String onlineCount;
 
 
     public Message() {
         this.username = "some_user";
-        this.message = "Null message";
+        this.msg = "Null message";
         this.type = "UNKNOWN";
         this.onlineCount = "0";
     }
 
     public Message(String username, String message){
         this.username = username;
-        this.message = message;
-        this.type = "OTHER";
+        this.msg = message;
+        this.type = "UNKNOWN";
         this.onlineCount = "";
     }
 
     public Message(String username, String message, String type, String onlineCount){
         this.username = username;
-        this.message = message;
+        this.msg = message;
         this.type = type;
         this.onlineCount = onlineCount;
     }
 
-    public JSONObject toJSON() {
-
-        JSONObject jo = new JSONObject();
-        jo.put("username", this.username);
-        jo.put("message", this.message);
-        jo.put("type", this.type);
-        jo.put("onlineCount", this.onlineCount);
-        return jo;
-    }
+//    public JSONObject toJSON() {
+//
+//        JSONObject jo = new JSONObject();
+//        jo.put("username", this.username);
+//        jo.put("msg", this.msg);
+//        jo.put("type", this.type);
+//        jo.put("onlineCount", this.onlineCount);
+//        return jo;
+//    }
 
     public String getUsername() {
         return username;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
     public String getType() {
@@ -65,8 +65,8 @@ public class Message {
         this.username = username;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String message) {
+        this.msg = message;
     }
 
     public void setType(String type) {
