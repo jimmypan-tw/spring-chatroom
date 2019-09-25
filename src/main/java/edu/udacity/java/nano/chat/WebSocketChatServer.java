@@ -1,5 +1,6 @@
 package edu.udacity.java.nano.chat;
 
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.boot.json.BasicJsonParser;
@@ -34,16 +35,16 @@ public class WebSocketChatServer {
 
     private static void sendMessageToAll(Message message) {
         //TODO: add send message method.
+        message.setOnlineCount(Integer.toString(onlineSessions.size()));
         onlineSessions.forEach((sessionId, session) -> {
-           sendMessage(session, message.toJSON());
+           sendMessage(session, JSON.toJSONString(message));
         });
 
     }
 
-    public static void sendMessage(Session session, JSONObject jsonObj) {
+    public static void sendMessage(Session session, String strMessage) {
         try {
-            session.getBasicRemote().sendText(jsonObj.get("message").toString()
-            );
+            session.getBasicRemote().sendText(strMessage);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -58,7 +59,7 @@ public class WebSocketChatServer {
         onlineSessions.put(session.getId(), session);
 
         // create a new Message object containing the size of onlineSessions
-        Message message = new Message(userName, " is online now.", "SPEAK", Integer.toString(onlineSessions.size()));
+        Message message = new Message(userName, userName + " is online now.", "SPEAK", Integer.toString(onlineSessions.size()));
 
         sendMessageToAll(message);
     }
@@ -68,14 +69,9 @@ public class WebSocketChatServer {
      */
     @OnMessage
     public void onMessage(Session session, String jsonStr) {
-//      public void onMessage(Session session, String jsonStr, @PathParam("userName") String userName){
-        //TODO: add send message.
-        System.out.println("jsonstr = "+jsonStr);
-        JsonParser jsonparser = new BasicJsonParser();
-        Map<String, Object> jsonMap = jsonparser.parseMap(jsonStr);
-        String user = jsonMap.get("username").toString();
-        String msg = jsonMap.get("msg").toString();
-        Message message = new Message(user, msg);
+        System.out.println("jsonStr = "+jsonStr);
+        Message message = JSON.parseObject(jsonStr, Message.class);
+        message.setType("SPEAK");
         sendMessageToAll(message);
     }
 
