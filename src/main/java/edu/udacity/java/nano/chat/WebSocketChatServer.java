@@ -1,6 +1,7 @@
 package edu.udacity.java.nano.chat;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Component;
@@ -34,14 +35,15 @@ public class WebSocketChatServer {
     private static void sendMessageToAll(Message message) {
         //TODO: add send message method.
         onlineSessions.forEach((sessionId, session) -> {
-           sendMessage(session, message.getMessage());
+           sendMessage(session, message.toJSON());
         });
 
     }
 
-    public static void sendMessage(Session session, String message) {
+    public static void sendMessage(Session session, JSONObject jsonObj) {
         try {
-            session.getBasicRemote().sendText(message);
+            session.getBasicRemote().sendText(jsonObj.get("message").toString()
+            );
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -56,7 +58,7 @@ public class WebSocketChatServer {
         onlineSessions.put(session.getId(), session);
 
         // create a new Message object containing the size of onlineSessions
-        Message message = new Message(userName, "Total "+Integer.toString(onlineSessions.size())+" sessions online now.", "SPEAK");
+        Message message = new Message(userName, " is online now.", "SPEAK", Integer.toString(onlineSessions.size()));
 
         sendMessageToAll(message);
     }
@@ -73,7 +75,7 @@ public class WebSocketChatServer {
         Map<String, Object> jsonMap = jsonparser.parseMap(jsonStr);
         String user = jsonMap.get("username").toString();
         String msg = jsonMap.get("msg").toString();
-        Message message = new Message(user, msg, "SPEAK");
+        Message message = new Message(user, msg);
         sendMessageToAll(message);
     }
 
@@ -84,7 +86,7 @@ public class WebSocketChatServer {
     public void onClose(Session session, @PathParam("userName") String userName) {
         //TODO: add close connection.
         onlineSessions.remove(session.getId());
-        Message message = new Message(userName, " left the chatroom", "SPEAK");
+        Message message = new Message(userName, " left the chatroom");
         sendMessageToAll(message);
     }
 
