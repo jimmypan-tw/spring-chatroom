@@ -150,7 +150,10 @@
      * Login
      */
     function login() {
-        // TODO: complete the login function
+        // need to re-direct to the "/index" mapping for the chat page
+        var user = document.getElementById('username').value
+        console.log("user = ", user)
+        window.location.replace('http://localhost:8080/index?username='+user)
     }
 
     /**

@@ -9,3 +9,5 @@ target/
 *.iws
 *.iml
 *.ipr
+chat2*
+.DS_Store
