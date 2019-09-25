@@ -57,16 +57,14 @@
                 <div class="mdui-chip">
                     <span class="mdui-chip-icon mdui-color-blue">
                         <i class="mdui-icon material-icons">face</i></span>
-                    <span class="mdui-chip-title">Online Users</span>
+                    <span class="mdui-chip-title">Online Users
                     <!-- TODO: check online number num -->
-
-
+                        <label class="chat-num"></label>
+                    </span>
                 </div>
                 <!-- TODO: add a message container -->
                 <div class="message-container">
-                    message container
                 </div>
-
             </div>
 
         </div>
@@ -83,17 +81,21 @@
      */
     function getWebSocket() {
         /**
-         * WebSocket client PS：URL shows WebSocket protocal, port number, and then end point.
+         * WebSocket client PS：URL shows WebSocket protocol, port number, and then end point.
          */
 
 
         //var webSocket = new WebSocket(/*[[${webSocketUrl}]]*/ 'ws://localhost:8080/chat');
-        var webSocket = new WebSocket('ws://localhost:8080/chat');
+        var websocket_url = 'ws://localhost:8080/chat/';
+        var userName = $('#username').text();
+        console.log("in getWebSocket(), userName = "+userName);
+        var webSocket = new WebSocket(websocket_url + userName);
         /**
          * websocket open connection.
          */
         webSocket.onopen = function (event) {
             console.log('WebSocket open connection');
+            console.log('WebSocket onOpen：' + event.data, 'color:green');
         };
 
         /**

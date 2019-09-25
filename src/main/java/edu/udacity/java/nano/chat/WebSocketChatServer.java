@@ -21,14 +21,15 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 
 @Component
-//@ServerEndpoint("/chat/{userName}")
-@ServerEndpoint("/chat")
+@ServerEndpoint("/chat/{userName}")
+//@ServerEndpoint("/chat")
 public class WebSocketChatServer {
 
     /**
      * All chat sessions.
      */
     private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
+    private static String last_user = null;
 
     private static void sendMessageToAll(Message message) {
         //TODO: add send message method.
@@ -51,14 +52,14 @@ public class WebSocketChatServer {
      * Open connection, 1) add session, 2) add user.
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String userName) {
+    public void onOpen(Session session, @PathParam("userName") String userName) {
         // add session
         onlineSessions.put(session.getId(), session);
 
         // create a new Message object containing the size of onlineSessions
 
         Message message = new Message(userName, userName+ " is online now.", "SPEAK", Integer.toString(onlineSessions.size()));
-
+        System.out.println("In onOpen(), userName = " + userName);
         sendMessageToAll(message);
     }
 
@@ -77,10 +78,11 @@ public class WebSocketChatServer {
      * Close connection, 1) remove session, 2) update user.
      */
     @OnClose
-    public void onClose(Session session, @PathParam("username") String userName) {
+    public void onClose(Session session, @PathParam("userName") String userName) {
         //TODO: add close connection.
         onlineSessions.remove(session.getId());
         Message message = new Message(userName, userName + " left the chatroom");
+        message.setType("SPEAK");
         sendMessageToAll(message);
     }
 
