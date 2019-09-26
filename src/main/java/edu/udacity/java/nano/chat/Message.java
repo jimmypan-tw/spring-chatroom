@@ -34,16 +34,6 @@ public class Message {
         this.onlineCount = onlineCount;
     }
 
-//    public JSONObject toJSON() {
-//
-//        JSONObject jo = new JSONObject();
-//        jo.put("username", this.username);
-//        jo.put("msg", this.msg);
-//        jo.put("type", this.type);
-//        jo.put("onlineCount", this.onlineCount);
-//        return jo;
-//    }
-
     public String getUsername() {
         return username;
     }
@@ -77,9 +67,6 @@ public class Message {
         this.onlineCount = onlineCount;
     }
 
-    //ENTER
-    //CHAT
-    //LEAVE
 
 
 }
