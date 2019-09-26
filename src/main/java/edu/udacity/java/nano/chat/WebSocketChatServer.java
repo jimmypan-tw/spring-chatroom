@@ -58,7 +58,7 @@ public class WebSocketChatServer {
 
         // create a new Message object containing the size of onlineSessions
 
-        Message message = new Message(userName, userName+ " is online now.", "SPEAK", Integer.toString(onlineSessions.size()));
+        Message message = new Message(userName, userName+ " is online now.", "JOIN", Integer.toString(onlineSessions.size()));
         System.out.println("In onOpen(), userName = " + userName);
         sendMessageToAll(message);
     }
@@ -82,7 +82,7 @@ public class WebSocketChatServer {
         //TODO: add close connection.
         onlineSessions.remove(session.getId());
         Message message = new Message(userName, userName + " left the chatroom");
-        message.setType("SPEAK");
+        message.setType("LEAVE");
         sendMessageToAll(message);
     }
 
