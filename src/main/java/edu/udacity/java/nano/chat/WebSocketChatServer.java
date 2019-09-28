@@ -2,6 +2,8 @@ package edu.udacity.java.nano.chat;
 
 
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
@@ -30,6 +32,7 @@ public class WebSocketChatServer {
      */
     private static Map<String, Session> onlineSessions = new ConcurrentHashMap<>();
     private static String last_user = null;
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketChatServer.class);
 
     private static void sendMessageToAll(Message message) {
         //TODO: add send message method.
@@ -59,7 +62,8 @@ public class WebSocketChatServer {
         // create a new Message object containing the size of onlineSessions
 
         Message message = new Message(userName, userName+ " is online now.", "JOIN", Integer.toString(onlineSessions.size()));
-        System.out.println("In onOpen(), userName = " + userName);
+        //System.out.println("In onOpen(), userName = " + userName);
+        logger.info("In onOpen(), userName = " + userName);
         sendMessageToAll(message);
     }
 
@@ -68,7 +72,8 @@ public class WebSocketChatServer {
      */
     @OnMessage
     public void onMessage(Session session, String jsonStr) {
-        System.out.println("jsonStr = "+jsonStr);
+        //System.out.println("jsonStr = "+jsonStr);
+        logger.info("jsonStr = "+jsonStr);
         Message message = JSON.parseObject(jsonStr, Message.class);
         message.setType("SPEAK");
         sendMessageToAll(message);
