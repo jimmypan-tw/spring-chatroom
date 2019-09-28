@@ -1,5 +1,12 @@
 package edu.udacity.java.nano;
 
+
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+
 import edu.udacity.java.nano.chat.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;
