@@ -48,6 +48,8 @@ public class WebSocketChatApplicationTest {
     @Test
     public void leave() throws Exception {
         //  verify that once the user has logged out, we return to the login page
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(view().name("/login"));
     }
 
 }
