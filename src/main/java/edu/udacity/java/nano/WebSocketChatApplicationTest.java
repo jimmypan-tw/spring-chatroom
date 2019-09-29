@@ -27,13 +27,27 @@ public class WebSocketChatApplicationTest {
 
     @Test
     public void login() throws Exception {
+        // verify that when loading the root page, it opens the login endpoint
         this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
                 .andExpect(view().name("/login"));
     }
 
     @Test
     public void userJoin() throws Exception {
+        // check that once logged in, the chat page shows the user accordingly.
         this.mockMvc.perform(get("/index?username=jimmy")).andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("jimmy")));
+        // You can also check the user counter, and make sure it shows the correct number of connected users.
     }
+
+    @Test
+    public void chat() throws Exception {
+        // verify that after entering with a username, this indeed opens the chat endpoint
+    }
+
+    @Test
+    public void leave() throws Exception {
+        //  verify that once the user has logged out, we return to the login page
+    }
+
 }
