@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-//@SpringBootTest
 @WebMvcTest
 public class WebSocketChatApplicationTest {
     @Autowired
@@ -50,8 +49,8 @@ public class WebSocketChatApplicationTest {
     @Test
     public void leave() throws Exception {
         //  verify that once the user has logged out, we return to the login page
-        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
-                .andExpect(view().name("login"));
+        this.mockMvc.perform(get("/index?username=jimmy")).andDo(print()).andExpect(status().isOk())
+                .andExpect(view().name("/"));
     }
 
 }
