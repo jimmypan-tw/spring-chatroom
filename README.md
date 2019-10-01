@@ -6,7 +6,7 @@ WebSocket is a communication protocol that makes it possible to establish a two-
 server and a client.
 
 ### Message model
-Message model is the message payload that will be exchanged between the client and the server. T
+Message model is the message payload that will be exchanged between the client and the server. 
 
 ### Complete WebSocketChatServer
 The Chat Server which handles basic operations including userJoin, Chat and Leave
