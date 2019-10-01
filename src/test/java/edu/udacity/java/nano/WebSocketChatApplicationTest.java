@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+//@SpringBootTest
 @WebMvcTest
 public class WebSocketChatApplicationTest {
     @Autowired
@@ -44,7 +44,7 @@ public class WebSocketChatApplicationTest {
     public void chat() throws Exception {
         // verify that after entering with a username, this indeed opens the chat endpoint
         this.mockMvc.perform(get("/index?username=jimmy")).andDo(print()).andExpect(status().isOk())
-                .andExpect(view().name("chat"));
+                .andExpect(view().name("login"));
     }
 
     @Test
